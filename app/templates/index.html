@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prediction</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --text: #111;
+            --card-bg: #fff;
+            --primary: #007bff;
+        }
+        
+        .dark {
+            --bg: #121212;
+            --text: #f8f8f8;
+            --card-bg: #1f1f1f;
+            --primary: #4e9eff;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Poppins", sans-serif;
+            transition: 0.3s ease-in-out;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 80px auto;
+            text-align: center;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: 0.2s;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+        }
+
+        button {
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 35px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .prediction-box {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: var(--card-bg);
+            font-size: 18px;
+            font-weight: 500;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .toggle-circle {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 1px;
+            left: 1px;
+            transition: 0.3s;
+        }
+
+        .dark .toggle {
+            background: #4e9eff;
+        }
+
+        .dark .toggle-circle {
+            transform: translateX(26px);
+            background: #e8e8e8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Toggle -->
+    <div class="toggle-container">
+        <span style="font-size:14px;">🌞</span>
+        <div id="themeToggle" class="toggle">
+            <div class="toggle-circle"></div>
+        </div>
+        <span style="font-size:14px;">🌙</span>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h1>📈 Stock Price Predictor</h1>
+            
+            <form method="POST">
+                <input 
+                    type="text" 
+                    name="ticker" 
+                    placeholder="Enter Stock Ticker (e.g., AAPL, TSLA, RELIANCE.NS)" 
+                    required>
+                <button type="submit">Predict</button>
+            </form>
+
+            {% if prediction %}
+                <div class="prediction-box">
+                    {{ prediction }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        const toggle = document.getElementById("themeToggle");
+        const body = document.body;
+
+        toggle.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            localStorage.setItem("theme", body.classList.contains("dark") ? "dark" : "light");
+        });
+
+        // Load theme
+        if (localStorage.getItem("theme") === "dark") {
+            body.classList.add("dark");
+        }
+    </script>
+
+</body>
+</html>
